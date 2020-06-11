@@ -48,5 +48,15 @@
         <jarDirectory url="file://$MODULE_DIR$/lib/libgdx-1.6.1" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/VideoExport/library" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/VideoExport/library" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
