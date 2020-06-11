@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.Sys;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -189,9 +190,11 @@ class PortrayMover extends PrinterMover {
     protected void moveParticle(Particle3D p, ParticleSystem ps) {
         if (p.isImmortal() && !status[ps.getParticles().indexOf(p)]){
             status[ps.getParticles().indexOf(p)] = true;
+            Random random = new Random(System.nanoTime());
+            p.setVisible(random.nextFloat()>0.90);
         }
         if(status[ps.getParticles().indexOf(p)]){
-            mover.perlinMove(noiseGenerator, p, 1f);
+            mover.perlinMove(noiseGenerator, p, 0.00001f);
             if(!sampler.contains(locX, locY, p.getLocation()))
                 p.setLocation(sampler.getRandomPoint(locX, locY));
         }
@@ -203,13 +206,13 @@ class PortrayMover extends PrinterMover {
     protected void moveParticle(@NotNull PApplet sketch, @NotNull Particle3D p) {
         if(!sampler.contains(locX, locY, p.getLocation()))
             p.setLocation(sampler.getRandomPoint(locX, locY));
-        else mover.perlinMove(noiseGenerator, p);
+        else mover.perlinMove(noiseGenerator, p, 0.00001f);
     }
 
     private void setTarget(@NotNull Particle3D p, PApplet sketch){
         PVector target = sampler.getRandomPoint(locX, locY);
         Random random = new Random(System.nanoTime());
-        float frame = (2+random.nextInt(5))*sketch.frameRate;
+        float frame = (10+random.nextInt(10))*sketch.frameRate;
         float distanceX = target.x - p.getLocation().x;
         float distanceY = target.y - p.getLocation().y;
         float accX = distanceX*2/(frame*frame);
@@ -224,6 +227,7 @@ class PortrayMover extends PrinterMover {
     @Override
     public void init(ParticleSystem ps) {
         super.init(ps);
-        ps.getParticles().forEach(particle3D -> setTarget(particle3D, ps.getSketch()));
+        ps.getVisibleParticles().forEach(particle3D -> setTarget(particle3D, ps.getSketch()));
+
     }
 }

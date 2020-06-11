@@ -295,9 +295,9 @@ class PortrayInitializer extends ParticleSystemInitializer{
 
     @Override
     protected void initParticle(PApplet sketch, Particle3D p) {
-        mover.randomPosition(p, sketch.width, sketch.height);
+        //mover.randomPosition(p, sketch.width, sketch.height);
         p.setVisible(true);
-        p.setRadius(6);
+        //p.setRadius(6);
         //p.setLifeSpan(-1);
         //p.setPos(new PVector(0,0,0));
         //p.setVelocity(new PVector(0,0,0));
