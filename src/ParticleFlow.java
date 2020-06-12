@@ -1,10 +1,10 @@
-import org.lwjgl.Sys;
+import com.hamoid.VideoExport;
 import peasy.PeasyCam;
 import processing.core.PApplet;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.hamoid.*;
+
 public class ParticleFlow extends PApplet {
 
     PeasyCam cam;
@@ -12,6 +12,7 @@ public class ParticleFlow extends PApplet {
     SceneSwitcher switcher;
     Map<Character, Integer> characterIntegerMap;
     VideoExport export;
+    boolean record = false;
 
     public static void main(String[] passedArgs) {
 
@@ -30,7 +31,7 @@ public class ParticleFlow extends PApplet {
     public void setup() {
 
         frameRate(30.0f);
-        if(sketchRenderer().equals(P3D)){
+        if (sketchRenderer().equals(P3D)) {
             cam = new PeasyCam(this, width / 2.f, height / 2.f, 0, 1000);
             cam.setMinimumDistance(100);
             cam.setMaximumDistance(2000);
@@ -40,10 +41,12 @@ public class ParticleFlow extends PApplet {
         characterIntegerMap = new HashMap<>();
         for (int i = 0; i < 10; i++)
             characterIntegerMap.put((char) (i + '0'), i);
-        export = new VideoExport(this);
-        export.setFrameRate(30);
-        export.setMovieFileName("/Users/loryenger/Downloads/"+System.currentTimeMillis()+".mp4");
-        export.startMovie();
+        if (record) {
+            export = new VideoExport(this);
+            export.setFrameRate(30);
+            export.setMovieFileName("/Users/loryenger/Downloads/" + System.currentTimeMillis() + ".mp4");
+            export.startMovie();
+        }
     }
 
     @Override
@@ -52,10 +55,12 @@ public class ParticleFlow extends PApplet {
         if (keyPressed)
             switcher.switchScene(characterIntegerMap.get(key));
         switcher.scene();
+        if (!record) return;
         export.saveFrame();
-        if(key=='s'){
+        if (key == 's') {
             export.endMovie();
             exit();
         }
+
     }
 }

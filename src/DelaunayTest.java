@@ -25,7 +25,7 @@ public class DelaunayTest extends PApplet {
     @Override
     public void settings() {
 
-        size(1200, 600);
+        size(600, 600);
         pixelDensity(2);
     }
 
@@ -33,7 +33,7 @@ public class DelaunayTest extends PApplet {
     public void setup() {
         frameRate(60.0f);
         triangulator = new DelaunayTriangulator();
-        ps = new ParticleSystem(this, 10000);
+        ps = new ParticleSystem(this, 3500);
         mover = new ParticleMover();
         sampler = new ImageSampler();
         visualizer = new ParticleVisualizer();
@@ -41,13 +41,13 @@ public class DelaunayTest extends PApplet {
         bg = loadImage("/Users/loryenger/Downloads/7.png");
         bg.resize(width, height);
         picker = new ColorPicker(bg);
-        img = loadImage("/Users/loryenger/Downloads/2.png");
+        img = loadImage("/Users/loryenger/Downloads/3.png");
         img.resize(img.width * height / img.height, height);
         locX = (width - img.width) / 2;
         locY = 0;
         sampler.sampleImage(this, img, ps.getNum());
         ps.getParticles().forEach(particle3D -> mover.randomPosition(particle3D, width, height));
-        strokeWeight(0.1f);
+        strokeWeight(0.05f);
         noFill();
     }
 
@@ -63,10 +63,10 @@ public class DelaunayTest extends PApplet {
                     == 0) continue;
             if (triangulator.tooLong(buffer[indices.get(i)], buffer[indices.get(i) + 1],
                     buffer[indices.get(i + 1)], buffer[indices.get(i + 1) + 1],
-                    buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1], 40.f)) continue;
+                    buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1], 45.f)) continue;
             if (sampler.visible(img, locX, locY, new PVector(buffer[indices.get(i)], buffer[indices.get(i) + 1]),
                     new PVector(buffer[indices.get(i + 1)], buffer[indices.get(i + 1) + 1]),
-                    new PVector(buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1]),2)) {
+                    new PVector(buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1]),1)) {
                 fill(picker.getColor(0,0, new PVector(buffer[indices.get(i)], buffer[indices.get(i) + 1])));
             } else {
                 stroke(0xEB,0xDD,0x5C);

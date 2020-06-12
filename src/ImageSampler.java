@@ -142,9 +142,9 @@ public class ImageSampler {
     }
     public boolean visible(PImage img, int x, int y, PVector p1, PVector p2, PVector p3, int level){
         int i = 0;
-        if(contains(x, y, p1, img))i++;
-        if(contains(x, y, p2, img))i++;
-        if(contains(x, y, p3, img))i++;
+        if(contains(x, y, p1))i++;
+        if(contains(x, y, p2))i++;
+        if(contains(x, y, p3))i++;
         return i>=level;
     }
 

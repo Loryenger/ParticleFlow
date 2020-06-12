@@ -130,7 +130,7 @@ class ShooterInitializer extends ParticleSystemInitializer {
     @Override
     protected void initParticle(@NotNull PApplet sketch, @NotNull Particle3D p) {
 
-        float time = sketch.random(1, 2.5f) * sketch.frameRate;
+        float time = sketch.random(3, 5.5f) * sketch.frameRate;
         float targetX = wC + sketch.random(1, w);
         float targetY = hC + sketch.random(1, h);
         float targetZ = sketch.random(-100, 0);
@@ -216,10 +216,10 @@ class PrinterInitializer extends ShooterInitializer {
         h = image.height;
         initX = sketch.width / 2.f;
         initY = sketch.height / 2.f;
-        init.add(new PVector(sketch.width / 2.f, 50, 0));
-        init.add(new PVector(50, sketch.height / 2.f, 0));
+        //init.add(new PVector(sketch.width / 2.f, 50, 0));
+        //init.add(new PVector(50, sketch.height / 2.f, 0));
         init.add(new PVector(sketch.width / 2.f, sketch.height - 50, 0));
-        init.add(new PVector(sketch.width - 50, sketch.height / 2.f, 0));
+        //init.add(new PVector(sketch.width - 50, sketch.height / 2.f, 0));
     }
 
     @Override
@@ -234,7 +234,7 @@ class PrinterInitializer extends ShooterInitializer {
         target.y += hC;
         float distance = PApplet.sqrt(cX * PApplet.pow(target.y - start.y, 2) + cY * PApplet.pow(target.x - start.x, 2));
         float maxDistance = PApplet.sqrt(cX * PApplet.pow(hC + h, 2) + cY * PApplet.pow(wC + w, 2));
-        float time = (1.f - distance / maxDistance * 0.5f) * 2.5f * sketch.frameRate;
+        float time = (1.f - distance / maxDistance * 0.5f) * 3f * sketch.frameRate;
         PVector acc = new PVector(0, 0, 0);
         acc.x = (target.x - start.x) * 2.f / (time * time);
         acc.y = (target.y - start.y) * 2.f / (time * time);
@@ -275,7 +275,7 @@ class FountainInitializer extends ShooterInitializer{
     @Override
     protected void initParticle(@NotNull PApplet sketch, @NotNull Particle3D p) {
         super.initParticle(sketch, p);
-        p.setAcceleration(new PVector(0,0.07f,0));
+        p.setAcceleration(new PVector(0,0.03f,0));
         p.setLifeSpan(-1);
     }
 }

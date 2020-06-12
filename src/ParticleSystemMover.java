@@ -1,5 +1,4 @@
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.Sys;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
