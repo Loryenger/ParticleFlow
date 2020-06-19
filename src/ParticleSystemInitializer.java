@@ -206,20 +206,23 @@ class PrinterInitializer extends ShooterInitializer {
     protected void initParameters(PApplet sketch, int num) {
 
         image = sketch.loadImage(imageFileName);
-        image.resize(sketch.width / 4 * 3, sketch.height / 4 * 3);
+        int width = sketch.width/2;
+        int height = image.height * width / image.width;
+        image.resize(width, height);
+        //image.resize(sketch.width / 4 * 3, sketch.height / 4 * 3);
         sampler.sampleImage(sketch, image, num);
         loci = sampler.getLoci();
         pixel = sampler.getPixel();
-        wC = sketch.width / 4.f / 2.f;
-        hC = sketch.height / 4.f / 2.f;
+        wC = sketch.width / 4.f;
+        hC = (sketch.height - image.height)/2.f;
         w = image.width;
         h = image.height;
         initX = sketch.width / 2.f;
         initY = sketch.height / 2.f;
-        //init.add(new PVector(sketch.width / 2.f, 50, 0));
-        //init.add(new PVector(50, sketch.height / 2.f, 0));
-        init.add(new PVector(sketch.width / 2.f, sketch.height - 50, 0));
-        //init.add(new PVector(sketch.width - 50, sketch.height / 2.f, 0));
+        //init.add(new PVector(sketch.width / 2.f, 0, 0));
+        //init.add(new PVector(0, sketch.height / 2.f, 0));
+        init.add(new PVector(sketch.width / 2.f, sketch.height , 0));
+        //init.add(new PVector(sketch.width , sketch.height / 2.f, 0));
     }
 
     @Override
@@ -232,6 +235,7 @@ class PrinterInitializer extends ShooterInitializer {
         float cY = 1 - PApplet.abs((initY - start.y) / initY);
         target.x += wC;
         target.y += hC;
+        p.setTarget(new PVector(target.x, target.y));
         float distance = PApplet.sqrt(cX * PApplet.pow(target.y - start.y, 2) + cY * PApplet.pow(target.x - start.x, 2));
         float maxDistance = PApplet.sqrt(cX * PApplet.pow(hC + h, 2) + cY * PApplet.pow(wC + w, 2));
         float time = (1.f - distance / maxDistance * 0.5f) * 3f * sketch.frameRate;
@@ -245,6 +249,7 @@ class PrinterInitializer extends ShooterInitializer {
         p.setLifeSpan((int) time);
         p.setVelocity(new PVector(0,0,0));
         p.setColor_(pixel.remove(0));
+        p.setRadius(sketch.random(5));
     }
 }
 
@@ -290,18 +295,29 @@ class PortrayInitializer extends ParticleSystemInitializer{
     @Override
     public void initParticleSystem(@NotNull ParticleSystem ps) {
         super.initParticleSystem(ps);
-        //ps.getVisibleParticles().forEach(particle3D -> mover.randomPosition(particle3D, ps.getSketch().width,  ps.getSketch().height));
+        ps.getVisibleParticles().forEach(particle3D -> mover.randomPosition(particle3D, ps.getSketch().width,  ps.getSketch().height));
     }
 
     @Override
     protected void initParticle(PApplet sketch, Particle3D p) {
         //mover.randomPosition(p, sketch.width, sketch.height);
         p.setVisible(true);
-        //p.setRadius(6);
+        p.setRadius(6);
         //p.setLifeSpan(-1);
         //p.setPos(new PVector(0,0,0));
         //p.setVelocity(new PVector(0,0,0));
         //p.setAcceleration(new PVector(0,0,0));
+    }
+}
+
+class AggressionInitializer extends ParticleSystemInitializer{
+    ParticleMover mover;
+    AggressionInitializer(){
+        mover = new ParticleMover();
+    }
+    @Override
+    protected void initParticle(PApplet sketch, Particle3D p) {
+        mover.setTarget(p, sketch);
     }
 }
 

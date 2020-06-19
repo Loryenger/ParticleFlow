@@ -25,7 +25,7 @@ public class DelaunayTest extends PApplet {
     @Override
     public void settings() {
 
-        size(600, 600);
+        size(1200, 600);
         pixelDensity(2);
     }
 
@@ -38,16 +38,16 @@ public class DelaunayTest extends PApplet {
         sampler = new ImageSampler();
         visualizer = new ParticleVisualizer();
         ng = new NoiseGenerator(this);
-        bg = loadImage("/Users/loryenger/Downloads/7.png");
+        bg = loadImage("/Users/loryenger/Downloads/2.jpg");
         bg.resize(width, height);
         picker = new ColorPicker(bg);
-        img = loadImage("/Users/loryenger/Downloads/3.png");
+        img = loadImage("/Users/loryenger/Downloads/03.png");
         img.resize(img.width * height / img.height, height);
         locX = (width - img.width) / 2;
         locY = 0;
         sampler.sampleImage(this, img, ps.getNum());
         ps.getParticles().forEach(particle3D -> mover.randomPosition(particle3D, width, height));
-        strokeWeight(0.05f);
+        strokeWeight(1f);
         noFill();
     }
 
@@ -66,10 +66,10 @@ public class DelaunayTest extends PApplet {
                     buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1], 45.f)) continue;
             if (sampler.visible(img, locX, locY, new PVector(buffer[indices.get(i)], buffer[indices.get(i) + 1]),
                     new PVector(buffer[indices.get(i + 1)], buffer[indices.get(i + 1) + 1]),
-                    new PVector(buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1]),1)) {
+                    new PVector(buffer[indices.get(i + 2)], buffer[indices.get(i + 2) + 1]),4)) {
                 fill(picker.getColor(0,0, new PVector(buffer[indices.get(i)], buffer[indices.get(i) + 1])));
             } else {
-                stroke(0xEB,0xDD,0x5C);
+                stroke(picker.getColor(0,0, new PVector(buffer[indices.get(i)], buffer[indices.get(i) + 1])));
                 noFill();
             }
             //stroke(picker.getRandomColor());

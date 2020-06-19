@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+import processing.core.PApplet;
 import processing.core.PVector;
 
 import java.util.Random;
@@ -75,6 +76,20 @@ public class ParticleMover {
     public boolean checkBoundary(float width, float height, @NotNull Particle3D p) {
 
         return p.getLocation().x < 0 || p.getLocation().x > width || p.getLocation().y < 0 || p.getLocation().y > height;
+    }
+
+    public void setTarget(@NotNull Particle3D p, PApplet sketch){
+        Random random = new Random(System.nanoTime());
+        float frame = (10+random.nextInt(10))*sketch.frameRate;
+        float distanceX = p.getTarget().x - p.getLocation().x;
+        float distanceY = p.getTarget().y - p.getLocation().y;
+        float accX = distanceX*2/(frame*frame);
+        float accY = 0;
+        float vX = 0;
+        float vY = distanceY / frame;
+        p.setLifeSpan((int)frame);
+        p.setAcceleration(new PVector(accX, accY));
+        p.setVelocity(new PVector(vX, vY));
     }
 
 }

@@ -163,11 +163,14 @@ class PortrayMover extends PrinterMover {
         status = new boolean[ps.getNum()];
         for (int i=0; i<ps.getNum(); i++)
             status[i] = false;
-        locY = 0;
         this.file = file;
         sampler = new ImageSampler();
         PImage img = ps.getSketch().loadImage(file);
-        img.resize(img.width * ps.getSketch().height / img.height, ps.getSketch().height);
+        int width = ps.getSketch().width/2;
+        int height = img.height * width / img.width;
+        img.resize(width, height);
+        //img.resize(img.width * ps.getSketch().height / img.height, ps.getSketch().height);
+        locY = (ps.getSketch().height - img.height) / 2;
         locX = (ps.getSketch().width - img.width) / 2;
         sampler.sampleImage(ps.getSketch(), img, ps.getNum());
         noiseGenerator = new NoiseGenerator(ps.getSketch());
@@ -190,7 +193,7 @@ class PortrayMover extends PrinterMover {
         if (p.isImmortal() && !status[ps.getParticles().indexOf(p)]){
             status[ps.getParticles().indexOf(p)] = true;
             Random random = new Random(System.nanoTime());
-            p.setVisible(random.nextFloat()>0.90);
+            p.setVisible(random.nextFloat()>0.80);
         }
         if(status[ps.getParticles().indexOf(p)]){
             mover.perlinMove(noiseGenerator, p, 0.00001f);

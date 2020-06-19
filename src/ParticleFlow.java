@@ -12,7 +12,7 @@ public class ParticleFlow extends PApplet {
     SceneSwitcher switcher;
     Map<Character, Integer> characterIntegerMap;
     VideoExport export;
-    boolean record = false;
+    boolean record = true;
 
     public static void main(String[] passedArgs) {
 
@@ -22,8 +22,9 @@ public class ParticleFlow extends PApplet {
 
     @Override
     public void settings() {
+        //fullScreen();
 
-        size(1200, 600);
+        size(1920, 1080);
         pixelDensity(2);
     }
 
@@ -36,7 +37,7 @@ public class ParticleFlow extends PApplet {
             cam.setMinimumDistance(100);
             cam.setMaximumDistance(2000);
         }
-        ps = new ParticleSystem(this, 2000);
+        ps = new ParticleSystem(this, 4000);
         switcher = new SceneSwitcher(this, ps);
         characterIntegerMap = new HashMap<>();
         for (int i = 0; i < 10; i++)

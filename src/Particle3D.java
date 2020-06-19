@@ -7,12 +7,12 @@ public class Particle3D {
     private PVector location;
     private PVector velocity;
     private PVector acceleration;
+    private PVector target;
     private float mass;
     private float radius;
     private int color_;
     private int lifeSpan;
     private boolean visible;
-
     Particle3D() {
 
         Random random = new Random(System.identityHashCode(this));
@@ -25,7 +25,6 @@ public class Particle3D {
         this.lifeSpan = -1;
         this.visible = true;
     }
-
     Particle3D(float radius, float mass, int color_, int lp) {
 
         this();
@@ -43,6 +42,26 @@ public class Particle3D {
         setRadius(radius);
         setColor_(color_);
         setLifeSpan(ls);
+    }
+
+    Particle3D(PVector location, PVector velocity, PVector acc, float radius, float mass, int c, int lp) {
+
+        this.location = location;
+        this.velocity = velocity;
+        this.acceleration = acc;
+        this.radius = radius;
+        this.color_ = c;
+        this.lifeSpan = lp;
+        this.mass = mass;
+        visible = true;
+    }
+
+    public PVector getTarget() {
+        return target;
+    }
+
+    public void setTarget(PVector target) {
+        this.target = target;
     }
 
     public void move(PVector acc, float velocityLimit) {
@@ -70,17 +89,6 @@ public class Particle3D {
         if (lifeSpan > 0) lifeSpan--;
     }
 
-    Particle3D(PVector location, PVector velocity, PVector acc, float radius, float mass, int c, int lp) {
-
-        this.location = location;
-        this.velocity = velocity;
-        this.acceleration = acc;
-        this.radius = radius;
-        this.color_ = c;
-        this.lifeSpan = lp;
-        this.mass = mass;
-        visible = true;
-    }
     public void stop() {
 
         acceleration = new PVector(0, 0, 0);
@@ -135,7 +143,7 @@ public class Particle3D {
         return lifeSpan == -1;
     }
 
-    public boolean isInvisible(){
+    public boolean isInvisible() {
         return !visible;
     }
 

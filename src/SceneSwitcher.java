@@ -18,7 +18,7 @@ public class SceneSwitcher {
         configurators = new HashMap<>();
         configurators.put(0, new SceneConfigurator(new DefaultInitializer(), new DefaultMover(), 0));
         configurators.put(1, new SceneConfigurator(
-                new PrinterInitializer("/Users/loryenger/Downloads/2.jpg"), new PrinterMover(),1));
+                new PrinterInitializer("/Users/loryenger/Downloads/1.png"), new PrinterMover(),1));
         configurators.put(2, new SceneConfigurator(new HiddenInitializer(), new FixedSwarmMover(),
                 new PrinterVisualizer(), 2));
         configurators.put(3, new SceneConfigurator(new ExplodeInitializer(),
@@ -30,7 +30,8 @@ public class SceneSwitcher {
         configurators.put(6, new SceneConfigurator(new FountainInitializer(),
                 new PrinterMover(50, 500L), new FieldFlowVisualizer(), 6));
         configurators.put(7, new SceneConfigurator(new PortrayInitializer(),
-                new PortrayMover("/Users/loryenger/Downloads/6.png", ps), new FieldFlowVisualizer(),7));
+                new PortrayMover("/Users/loryenger/Downloads/1.png", ps), new FieldFlowVisualizer(),7));
+        configurators.put(8, new SceneConfigurator(new AggressionInitializer(), new DefaultMover(), new FieldFlowVisualizer(), 8));
     }
 
     void switchScene(Integer n) {
